@@ -136,6 +136,8 @@ find_package(Threads REQUIRED)
 
 find_library(LIBRT rt)
 
+add_subdirectory(lib/QHotkey)
+
 if (USE_SYSTEM_LIBCOMMUNI)
     find_package(LibCommuni REQUIRED)
 else()

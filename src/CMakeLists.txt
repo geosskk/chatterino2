@@ -797,6 +797,7 @@ target_link_libraries(${LIBRARY_PROJECT}
         websocketpp::websocketpp
         Threads::Threads
         RapidJSON::RapidJSON
+        QHotkey::QHotkey
         LRUCache
         MagicEnum
         $<$<BOOL:${WIN32}>:Wtsapi32>
