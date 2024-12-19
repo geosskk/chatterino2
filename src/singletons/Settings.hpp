@@ -281,6 +281,7 @@ public:
     FloatSetting pauseOnHoverDuration = {"/behaviour/pauseOnHoverDuration", 0};
     EnumSetting<Qt::KeyboardModifier> pauseChatModifier = {
         "/behaviour/pauseChatModifier", Qt::KeyboardModifier::NoModifier};
+    QStringSetting pauseShortcut = {"/behaviour/pauseShortcut", ""};
     BoolSetting autorun = {"/behaviour/autorun", false};
     BoolSetting mentionUsersWithComma = {"/behaviour/mentionUsersWithComma",
                                          true};

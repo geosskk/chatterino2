@@ -20,6 +20,8 @@
 #include "util/IncognitoBrowser.hpp"
 #include "widgets/BaseWindow.hpp"
 #include "widgets/settingspages/GeneralPageView.hpp"
+#include "widgets/dialogs/EditHotkeyDialog.hpp"
+#include "controllers/hotkeys/Hotkey.hpp"
 
 #include <magic_enum/magic_enum.hpp>
 #include <QDesktopServices>
@@ -27,6 +29,7 @@
 #include <QFontDialog>
 #include <QLabel>
 #include <QScrollArea>
+#include <QKeySequenceEdit>
 
 namespace {
 
@@ -364,6 +367,23 @@ void GeneralPage::initLayout(GeneralPageView &layout)
         [](auto args) {
             return fuzzyToFloat(args.value, 1.f);
         });
+
+    auto *pauseShortcutInput = new QKeySequenceEdit();
+    pauseShortcutInput->setClearButtonEnabled(true);
+    pauseShortcutInput->setKeySequence(QKeySequence::fromString(s.pauseShortcut));
+
+    QObject::connect(pauseShortcutInput, &QKeySequenceEdit::editingFinished, this, [this, pauseShortcutInput](){
+        getSettings()->pauseShortcut.setValue(pauseShortcutInput->keySequence().toString());
+    });
+
+    auto *pauseShortcutLayout = new QHBoxLayout;
+    auto *pauseShortcutLabel = new QLabel("Thing:");
+    pauseShortcutLayout->addWidget(pauseShortcutLabel);
+    pauseShortcutLayout->addStretch(1);
+    pauseShortcutLayout->addWidget(pauseShortcutInput);
+
+    layout.addLayout(pauseShortcutLayout);
+
     layout.addCheckbox("Smooth scrolling", s.enableSmoothScrolling);
     layout.addCheckbox("Smooth scrolling on new messages",
                        s.enableSmoothScrollingNewMessages);

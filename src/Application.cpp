@@ -61,6 +61,7 @@
 #include "widgets/Notebook.hpp"
 #include "widgets/splits/Split.hpp"
 #include "widgets/Window.hpp"
+#include "widgets/helper/ChannelView.hpp"
 
 #include <miniaudio.h>
 #include <QApplication>
@@ -180,6 +181,7 @@ Application::Application(Settings &_settings, const Paths &paths,
     , streamerMode(new StreamerMode)
     , twitchUsers(new TwitchUsers)
     , pronouns(new pronouns::Pronouns)
+    , globalPauseHotkey(new QHotkey(qApp))
 #ifdef CHATTERINO_HAVE_PLUGINS
     , plugins(new PluginController(paths))
 #endif
@@ -277,6 +279,42 @@ void Application::initialize(Settings &settings, const Paths &paths)
     this->initSeventvEventAPI();
 
     this->streamerMode->start();
+
+    this->globalPauseHotkey->setShortcut(QKeySequence::fromString(getSettings()->pauseShortcut.getValue()), true);
+
+    // qDebug() << "Is registered:" << this->globalPauseHotkey->isRegistered();
+
+    getSettings()->pauseShortcut.connect(
+        [this] {
+            // qDebug () << "pause shortcut setting changed" << getSettings()->pauseShortcut.getValue();
+            this->globalPauseHotkey->setShortcut(QKeySequence::fromString(getSettings()->pauseShortcut.getValue()), true);
+        },
+        false
+    );
+
+    QObject::connect(this->globalPauseHotkey.get(), &QHotkey::activated, qApp, [&](){
+        // qDebug() << "Hotkey Activated";
+    
+        auto *page = this->getWindows()->getLastSelectedWindow()->getNotebook().getSelectedPage();
+
+        if (page != nullptr)
+        {
+            std::vector<Split *> splits = page->getSplits();
+            auto firstPaused = splits.front()->getChannelView().paused();
+            for (Split *split : splits)
+            {
+                if (firstPaused)
+                {
+                    split->getChannelView().unpause(PauseReason::KeyboardModifier);
+                } else {
+                    split->getChannelView().pause(PauseReason::KeyboardModifier);
+                }
+                // split->updateLastReadMessage();
+            }
+
+            // page->hideResizeHandles();
+        }
+    });
 
     this->initialized = true;
 }

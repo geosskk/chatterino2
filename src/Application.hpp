@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <memory>
+#include <QHotkey>
 
 namespace chatterino {
 
@@ -174,6 +175,7 @@ private:
     std::unique_ptr<IStreamerMode> streamerMode;
     std::unique_ptr<ITwitchUsers> twitchUsers;
     std::unique_ptr<pronouns::Pronouns> pronouns;
+    std::unique_ptr<QHotkey> globalPauseHotkey;
 #ifdef CHATTERINO_HAVE_PLUGINS
     std::unique_ptr<PluginController> plugins;
 #endif
