@@ -138,13 +138,13 @@ jobs:
             plugins: true
             skip-artifact: false
             skip-crashpad: false
-          # Windows 7/8
-          - os: windows-latest
-            qt-version: 5.15.2
-            force-lto: false
-            plugins: true
-            skip-artifact: false
-            skip-crashpad: true
+          # # Windows 7/8
+          # - os: windows-latest
+          #   qt-version: 5.15.2
+          #   force-lto: false
+          #   plugins: true
+          #   skip-artifact: false
+          #   skip-crashpad: true
 
       fail-fast: false
     env:
