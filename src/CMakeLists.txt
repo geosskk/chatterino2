@@ -494,6 +494,7 @@ set(SOURCE_FILES
         util/DisplayBadge.cpp
         util/DisplayBadge.hpp
         util/Expected.hpp
+        util/FilesystemHelpers.hpp
         util/FormatTime.cpp
         util/FormatTime.hpp
         util/FunctionEventFilter.cpp
@@ -722,6 +723,8 @@ set(SOURCE_FILES
         widgets/settingspages/PluginsPage.hpp
         widgets/settingspages/SettingsPage.cpp
         widgets/settingspages/SettingsPage.hpp
+        widgets/settingspages/SettingWidget.cpp
+        widgets/settingspages/SettingWidget.hpp
 
         widgets/splits/ClosedSplits.cpp
         widgets/splits/ClosedSplits.hpp
