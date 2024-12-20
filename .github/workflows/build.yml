@@ -360,11 +360,11 @@ jobs:
           name: chatterino-windows-x86-64-Qt-6.7.1-symbols.pdb.7z
           path: release-artifacts/
 
-      - uses: actions/download-artifact@v4
-        name: Windows Qt5.15.2
-        with:
-          name: chatterino-windows-x86-64-Qt-5.15.2.zip
-          path: release-artifacts/
+      # - uses: actions/download-artifact@v4
+      #   name: Windows Qt5.15.2
+      #   with:
+      #     name: chatterino-windows-x86-64-Qt-5.15.2.zip
+      #     path: release-artifacts/
 
       # # Linux
       # - uses: actions/download-artifact@v4
@@ -401,7 +401,7 @@ jobs:
           ls -l
 
           # Mark all Windows Qt5 builds as old
-          mv chatterino-windows-x86-64-Qt-5.15.2.zip chatterino-windows-old-x86-64-Qt-5.15.2.zip
+          # mv chatterino-windows-x86-64-Qt-5.15.2.zip chatterino-windows-old-x86-64-Qt-5.15.2.zip
         working-directory: release-artifacts
         shell: bash
 
