@@ -138,13 +138,13 @@ jobs:
             plugins: true
             skip-artifact: false
             skip-crashpad: false
-          # Windows 7/8
-          - os: windows-latest
-            qt-version: 5.15.2
-            force-lto: false
-            plugins: true
-            skip-artifact: false
-            skip-crashpad: true
+          # # Windows 7/8
+          # - os: windows-latest
+          #   qt-version: 5.15.2
+          #   force-lto: false
+          #   plugins: true
+          #   skip-artifact: false
+          #   skip-crashpad: true
 
       fail-fast: false
     env:
@@ -296,7 +296,11 @@ jobs:
       - name: Install dependencies (MacOS)
         if: startsWith(matrix.os, 'macos')
         run: |
-          brew install boost openssl rapidjson p7zip create-dmg cmake tree
+          brew install openssl rapidjson p7zip create-dmg cmake tree
+          brew tap-new gh/local-boost
+          brew tap homebrew/core --force
+          brew extract --version=1.86.0 boost gh/local-boost
+          brew install boost@1.86.0
         shell: bash
 
       - name: Build (MacOS)
@@ -360,11 +364,11 @@ jobs:
           name: chatterino-windows-x86-64-Qt-6.7.1-symbols.pdb.7z
           path: release-artifacts/
 
-      - uses: actions/download-artifact@v4
-        name: Windows Qt5.15.2
-        with:
-          name: chatterino-windows-x86-64-Qt-5.15.2.zip
-          path: release-artifacts/
+      # - uses: actions/download-artifact@v4
+      #   name: Windows Qt5.15.2
+      #   with:
+      #     name: chatterino-windows-x86-64-Qt-5.15.2.zip
+      #     path: release-artifacts/
 
       # # Linux
       # - uses: actions/download-artifact@v4
@@ -401,7 +405,7 @@ jobs:
           ls -l
 
           # Mark all Windows Qt5 builds as old
-          mv chatterino-windows-x86-64-Qt-5.15.2.zip chatterino-windows-old-x86-64-Qt-5.15.2.zip
+          # mv chatterino-windows-x86-64-Qt-5.15.2.zip chatterino-windows-old-x86-64-Qt-5.15.2.zip
         working-directory: release-artifacts
         shell: bash
 
