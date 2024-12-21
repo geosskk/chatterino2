@@ -300,19 +300,20 @@ void Application::initialize(Settings &settings, const Paths &paths)
         if (page != nullptr)
         {
             std::vector<Split *> splits = page->getSplits();
-            auto firstPaused = splits.front()->getChannelView().paused();
-            for (Split *split : splits)
-            {
-                if (firstPaused)
-                {
-                    split->getChannelView().unpause(PauseReason::KeyboardModifier);
-                } else {
-                    split->getChannelView().pause(PauseReason::KeyboardModifier);
-                }
-                // split->updateLastReadMessage();
-            }
 
-            // page->hideResizeHandles();
+            if (!splits.empty())
+            {
+                auto firstPaused = splits.front()->getChannelView().paused();
+                for (Split *split : splits)
+                {
+                    if (firstPaused)
+                    {
+                        split->getChannelView().unpause(PauseReason::KeyboardModifier);
+                    } else {
+                        split->getChannelView().pause(PauseReason::KeyboardModifier);
+                    }
+                }
+            }
         }
     });
 
